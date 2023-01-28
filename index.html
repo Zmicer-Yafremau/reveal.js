@@ -25,20 +25,150 @@
 				</section>
 				<section> Install lodash
 					<section>
-						In browser:
-						<pre><code data-line-numbers="0-10"><script src="lodash.js"></script>
-							</code></pre>
-							With npm:
+						Local:
 							  <pre><code data-trim data-noescape>
-	$ npm i -g npm
-	$ npm i --save lodash
+npm i lodash
 							  </code></pre>
+							  <pre><code data-line-numbers="0-10"><script src="lodash.js"></script>
+							  </code></pre>
+							  Or with CDN:
+							  <pre><code data-line-numbers="0-10"><script src="
+https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
+"></script>
+							  </code></pre>
+							</section>
+				</section>
+				<section>Array Methods
+					<section>		<pre><code data-trim data-noescape>
+						_.compact([0, 1, false, 2, '', 3]);
+						// => [1, 2, 3]
+																			  </code></pre></section>
+					<section><pre><code data-trim data-noescape>
+						const square = n => n * n;
+						   
+						  _.map([4, 8], square);
+						  // => [16, 64]
+						  _.map({ 'a': 4, 'b': 8 }, square);
+						  // => [16, 64] (iteration order is not guaranteed)
+						   
+						  const users = [
+							{ 'user': 'barney' },
+							{ 'user': 'fred' }
+						  ];
+
+						  _.map(users, 'user');
+						  // => ['barney', 'fred']
+				    </code></pre>
+				   </section>
+				</section>
+				<section>String Methods
+
+					<pre><code data-trim data-noescape>
+_.capitalize('FRED');
+// => 'Fred'
+
+_.trim('  abc  ');
+// => 'abc'
+_.trim('-_-abc-_-', '_-');
+// => 'abc'
+_.map(['  foo  ', '  bar  '], _.trim);
+// => ['foo', 'bar']
+
+						 </code></pre>
+				</section>
+				<section>Numbers
+					<pre><code data-trim data-noescape>
+						_.random(0, 5);
+						// => an integer between 0 and 5
+						 
+						_.random(5);
+						// => also an integer between 0 and 5
+						 
+						_.random(5, true);
+						// => a floating-point number between 0 and 5
+						 
+						_.random(1.2, 5.2);
+						// => a floating-point number between 1.2 and 5.2
+												 </code></pre>
+				</section>
+				<section>Math
+					<pre><code data-trim data-noescape>
+						_.sum([4, 2, 8, 6]);
+						// => 20
+												 </code></pre>
+				</section>
+				<section>Clone
+					<pre><code data-trim data-noescape>
+const objects = [{ 'a': 1 }, { 'b': 2 }];
+ 
+const shallow = _.clone(objects);
+console.log(shallow[0] === objects[0]);
+// => true
+
+const deep = _.cloneDeep(objects);
+console.log(deep[0] === objects[0]);
+// => false
+
+												 </code></pre>
+				</section>
+				<section>Function Methods
+					<section>
+						<pre><code data-trim data-noescape>
+							function abc(a, b, c) {
+								return [a, b, c];
+							  };
+
+							  function curry(fn) {
+								return function rememberFirstArg(a) {
+								  return function rememberSecondArg(b) {
+									return fn(a, b)
+								  }
+								}
+							  }
+
+							  const curried = curry(abc);
+	                              
+							  curried(1)(2)(3);
+							  // => [1, 2, 3]
+							  curried(1, 2)(3);
+							  // => [1, 2, 3]
+							  curried(1, 2, 3);
+							  // => [1, 2, 3]
+
+							  const curried_lodash = _.curry(abc);
+
+							  curried_lodash(1)(_, 3)(2);
+							  // => [1, 2, 3]
+							
+																			 </code></pre>
+					</section>
+					<section>
+						<pre><code data-trim data-noescape>
+const add = (n) => (n + 10);
+
+const memoize = (fn) => {
+  let cache = {};
+  return (...args) => {
+    let n = args[0]; 
+    if (n in cache) {
+      return cache[n];
+    }
+    else {
+      let result = fn(n);
+      cache[n] = result;
+      return result;
+    }
+  }
+const memoizedAdd = memoize(add);
+
+const lodash_memoizedAdd = _.memoize(add);
+							
+																			 </code></pre>
 					</section>
 				</section>
-				<section>Slide 3</section>
 			</div>
 		</div>
-
+<script src="./node_modules/lodash/lodash.js"></script>
 		<script src="dist/reveal.js"></script>
 		<script src="plugin/notes/notes.js"></script>
 		<script src="plugin/markdown/markdown.js"></script>
